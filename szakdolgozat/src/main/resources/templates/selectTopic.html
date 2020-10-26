@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Témakör és szint kiválasztása</title>
+</head>
+<body>
+<h2>Témakör és szint kiválasztása</h2>
+
+<!--  
+<h4>Az előző feladat megoldásával eltelt idő: <span th:text="${elapsedTime}"></span> másodperc.</h4>
+
+-->
+
+<p th:each="t: ${timeList}" th:text="${t}"></p>
+<form method="post" action="selectTopic">
+	<label for="topic">Témakör: </label>
+	<select id="topic" name="topic">
+		<option value="ops">operátorok</option>
+		<option value="arrays">tömbök</option>
+		<option value="strings">sztringkezelés</option>
+		<option value="structs">struktúrák</option>
+		
+	</select>
+	<label for="level">Szint: </label>
+	<select id="level" name="level">
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		
+	</select>
+	
+	<input type="submit"> 
+</form>
+</body>
+</html>

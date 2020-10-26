@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>C programozás gyakorlása</title>
+<script type="text/javascript" th:src="@{/textareaHW.js}"></script>
+</head>
+<body onload="fillTextarea()">
+<h4> Feladat: Döntse el, hogy egy szám páros vagy páratlan! </h4>
+
+<label for="solution">Megoldás:</label>
+<br>
+<form method="post" action="c_compile">
+
+<textarea th:text="${solution}" name="solution" id="solution" rows="15" cols="100"></textarea>
+<p>
+Paraméterek (a különbözőeknél ;-t kell tenni): <input name="params" id="params"/>
+<p>	
+<input type="hidden" name="route" value="topics/operators/L4/Even/even">
+<input type="hidden" name="path" value="/operators/L4/Even/">
+<input type="submit" value="Kód kiértékelése">	
+</form>
+
+<p>
+<a href="/endOfTrying">Próbálkozás vége</a>
+
+
+<h4>Idő: <span th:text="${elapsedTime}"></span> másodperc.</h4>
+
+<p th:each="t: ${timeList}" th:text="${t}"></p>
+
+<h4>Fordítás és futtatás eredménye</h4>
+
+<h4>Fordítás eredménye:</h4>
+<!-- Fordítás: -->
+<p th:each="c: ${compileLog}" th:text="${c}"> </p>
+
+<h4>Futtatás eredménye:</h4>
+<!--Futtatás:-->
+<p th:each="r: ${runLog}" th:text="${r}"></p>
+
+<h4>Output:</h4>
+<!--Output:-->
+<p th:each="o: ${stdout}" th:text="${o}"></p>
+
+<h4>Szemantikai teszt eredménye: <span th:text="${passedTestCaseCounter}"></span> sikeres, <span th:text="${failedTestCaseCounter}"></span> sikertelen.</h4>
+<!-- Test output:-->
+<!--  
+<p th:each="s: ${testRunLog}" th:text="${s}"></p>
+-->
+<h4>Statikus kódelemzés:</h4>
+<!-- Simple static analyzing with cppcheck output:-->
+<p th:each="h: ${simpleOut}" th:text="${h}"></p>
+
+<h4>Halstead komplexitás (százalékos eltérés a mintamegoldástól):</h4>
+<!-- Halstead output (with frama-c):-->
+<p th:each="h: ${halsteadOut}" th:text="${h}"></p>
+
+<!-- Cyclomatic compexity -->
+<h4>Ciklomatikus komplexitás (százalékos eltérés a mintamegoldástól):
+<span th:text="${cyc}"></span></h4>
+
+<!-- Naming conventions -->
+<h4>Névkonvenciók:
+<span th:text="${namingConventions}"></span></h4>
+
+
+	
+</body>
+</html>

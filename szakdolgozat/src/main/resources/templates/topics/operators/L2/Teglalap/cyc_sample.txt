@@ -1,0 +1,6 @@
+1
+main
+1
+keruletSzamol
+1
+teruletSzamol
