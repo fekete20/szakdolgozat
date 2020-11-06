@@ -105,14 +105,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("selectTopic");
 		timerService.stop();
-		File sourceFileName = new File(fileService.getSourcePath() + fileService.getSourceFileName());
-		sourceFileName.delete();
-		sourceFileName = new File(fileService.getCompiledPath() + fileService.getSourceFileName());
-		sourceFileName.delete();
-		sourceFileName = new File(fileService.getTestSourcePath() + "test" + fileService.getSourceFileName());
-		sourceFileName.delete();
-		sourceFileName = new File(fileService.getCompiledTestPath() + "test" + fileService.getSourceFileName());
-		sourceFileName.delete();
+
 		return mav;
 	}
 
@@ -138,6 +131,15 @@ public class MainController {
 		analyzeService.calculateCyclomaticComplexity(fileService.getSourceFileName(), path);
 		analyzeService.calculateHalstead(fileService.getSourceFileName(), path);
 		analyzeService.checkNamingConventions(fileService.getSourceFileName());
+		
+		File sourceFileName = new File(fileService.getSourcePath() + fileService.getSourceFileName());
+		sourceFileName.delete();
+		sourceFileName = new File(fileService.getCompiledPath() + fileService.getSourceFileName());
+		sourceFileName.delete();
+		sourceFileName = new File(fileService.getTestSourcePath() + "test" + fileService.getSourceFileName());
+		sourceFileName.delete();
+		sourceFileName = new File(fileService.getCompiledTestPath() + "test" + fileService.getSourceFileName());
+		sourceFileName.delete();
 
 		return "redirect:/practice?route="+route;
 	}
