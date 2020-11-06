@@ -5,58 +5,45 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import complex.szakdolgozat.model.ExecuteModel;
 
 @Component
 @Scope("session")
 public class ExecuteService {
-	ParamService paramService = new ParamService();
+	private ParamService paramService = new ParamService();
+	private ExecuteModel executeModel = new ExecuteModel();
 
-	List<String> runLog = new ArrayList<>();
-	List<String> stdout = new ArrayList<>();
-
-	List<String> testRunLog = new ArrayList<>();
-	
-	int passedTestCaseCounter = 0;
-	int failedTestCaseCounter = 0;
-	
-	public int getPassedTestCaseCounter() {
-		return passedTestCaseCounter;
-	}
-
-	public int getFailedTestCaseCounter() {
-		return failedTestCaseCounter;
+	public List<String> getRunLog() {
+		return executeModel.getRunLog();
 	}
 
 	public List<String> getTestRunLog() {
-		return testRunLog;
-	}
-
-	public List<String> getRunLog() {
-		return runLog;
+		return executeModel.getTestRunLog();
 	}
 
 	public List<String> getStdout() {
-		return stdout;
+		return executeModel.getStdout();
+	}
+
+	public int getPassedTestCaseCounter() {
+		return executeModel.getPassedTestCaseCounter();
+	}
+
+	public int getFailedTestCaseCounter() {
+		return executeModel.getFailedTestCaseCounter();
 	}
 
 	public void executeCompiledCCode(String sourceFileName, String params) {
 		paramService.setParams(params);
-		
-		if(!runLog.isEmpty()) {
-			runLog.clear();
-		}
-		
-		if(!stdout.isEmpty()) {
-			stdout.clear();
-		}
-		
+		executeModel.deleteRunLog();
+		executeModel.deleteStdout();
+
 		try {
 			String output;
 			Process execution = Runtime.getRuntime().exec("./src" + File.separator + "main" + File.separator
@@ -71,7 +58,7 @@ public class ExecuteService {
 			}
 
 			while (scanner.hasNextLine()) {
-				stdout.add(scanner.nextLine());
+				executeModel.addStdout(scanner.nextLine());
 			}
 			scanner.close();
 
@@ -79,12 +66,12 @@ public class ExecuteService {
 			boolean error = false;
 
 			while ((output = stdError.readLine()) != null) {
-				runLog.add(output);
+				executeModel.addRunLog(output);
 				error = true;
-				runLog.add("\n");
+				executeModel.addRunLog("\n");
 			}
 			if (!error)
-				runLog.add("sikeresen futtatva.");
+				executeModel.addRunLog("sikeresen futtatva.");
 			execution.destroy();
 
 		} catch (IOException e) {
@@ -93,28 +80,24 @@ public class ExecuteService {
 	}
 
 	public void executeTestCases(String testSourceFileName) {
-		passedTestCaseCounter = 0;
-		failedTestCaseCounter = 0;
-		
-		if(!testRunLog.isEmpty()) {
-			testRunLog.clear();
-		}
-			
+		executeModel.resetTestCaseCounters();
+		executeModel.deleteTestRunLog();
+
 		try {
 			Process testExecution = Runtime.getRuntime().exec("./src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "compiled_test_cases" + File.separator + testSourceFileName);
 			Scanner sc = new Scanner(testExecution.getInputStream());
 
 			while (sc.hasNextLine()) {
-				testRunLog.add(sc.nextLine());
+				executeModel.addTestRunLog(sc.nextLine());
 			}
 			sc.close();
 
-			for (String line : testRunLog) {
-				if(line.contains("passed")) {
-					passedTestCaseCounter++;
-				} else if(line.contains("FAILED")) {
-					failedTestCaseCounter++;
+			for (String line : executeModel.getTestRunLog()) {
+				if (line.contains("passed")) {
+					executeModel.incrementPassedTestCaseCounter();
+				} else if (line.contains("FAILED")) {
+					executeModel.incrementFailedTestCaseCounter();
 				}
 			}
 			testExecution.destroy();

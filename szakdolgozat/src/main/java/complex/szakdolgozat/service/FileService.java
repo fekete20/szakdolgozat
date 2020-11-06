@@ -27,9 +27,7 @@ public class FileService {
 			+ "c_test_cases" + File.separator;
 	private final String compiledTestPath = "src" + File.separator + "main" + File.separator + "resources" + File.separator
 			+ "compiled_test_cases" + File.separator;
-	
-	
-	
+
 	
 	public String getCompiledPath() {
 		return compiledPath;
@@ -70,11 +68,9 @@ public class FileService {
 			File file = new File(getSourcePath() + getSourceFileName());
 
 			if (file.createNewFile()) {
-				System.out.println("Fájl létrehozva: " + file.getName());
 				FileWriter fileWriter = new FileWriter(getSourcePath() + getSourceFileName());
 				fileWriter.write(solution);
 				fileWriter.close();
-				System.out.println("Forráskód kiírva ide: " + getSourceFileName());
 
 			} else {
 				System.err.println("A fájl már létezik.");
@@ -110,11 +106,9 @@ public class FileService {
 			File testCase = new File("src/main/resources/c_test_cases/" + "test" + sourceFileName);
 
 			if (testCase.createNewFile()) {
-				System.out.println("Fájl létrehozva: " + file.getName());
 				FileWriter fileWriter = new FileWriter("src/main/resources/c_test_cases/" + "test" + sourceFileName);
 				fileWriter.write(testSourceString);
 				fileWriter.close();
-				System.out.println("Forráskód kiírva ide: " + getSourceFileName());
 
 			} else {
 				System.err.println("A fájl már létezik.");

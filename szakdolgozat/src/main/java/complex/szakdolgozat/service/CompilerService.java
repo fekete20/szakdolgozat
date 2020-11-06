@@ -4,42 +4,28 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import complex.szakdolgozat.model.CompilerModel;
+
 @Component
 @Scope("session")
 public class CompilerService {
 
-	private List<String> compileLog = new ArrayList<>();
-	List<String> testCompileLog = new ArrayList<>();
-
-	public List<String> getTestCompileLog() {
-		return testCompileLog;
-	}
-
-	public void setTestCompileLog(List<String> testCompileLog) {
-		this.testCompileLog = testCompileLog;
-	}
+	private CompilerModel compilerModel = new CompilerModel();
 
 	public List<String> getCompileLog() {
-		return compileLog;
-	}
-
-	public void setCompileLog(List<String> compileLog) {
-		this.compileLog = compileLog;
+		return compilerModel.getCompileLog();
 	}
 
 	public boolean compileCSource(String sourceFileName) {
 		boolean error = false;
-		
-		if(!compileLog.isEmpty()) {
-			compileLog.clear();
-		}
-		
+
+		compilerModel.deleteCompileLog();
+
 		try {
 			String compilerOutput;
 
@@ -50,52 +36,50 @@ public class CompilerService {
 							+ sourceFileName + " -lm");
 
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(compiler.getErrorStream()));
-		
+
 			while ((compilerOutput = stdError.readLine()) != null) {
-				compileLog.add(compilerOutput);
-				if(compilerOutput.contains("error")) {
+				compilerModel.addCompileLog(compilerOutput);
+				if (compilerOutput.contains("error")) {
 					error = true;
 				}
-				compileLog.add("\n");
+				compilerModel.addCompileLog("\n");
 			}
 
 			if (!error)
-				compileLog.add("sikeresen fordítva.");
+				compilerModel.addCompileLog("sikeresen fordítva");
 			compiler.destroy();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return error;
 	}
 
 	public boolean compileTestSource(String testSourceFileName) {
 		boolean error = false;
-		
-		if(!testCompileLog.isEmpty()) {
-			testCompileLog.clear();
-		}
+
+		compilerModel.deleteTestCompileLog();
+
 		try {
 			String compilerOutput;
-			
+
 			Process testCompiler = Runtime.getRuntime()
 					.exec("gcc " + "src" + File.separator + "main" + File.separator + "resources" + File.separator
-							+ "c_test_cases" + File.separator +  testSourceFileName + " -o src" + File.separator + "main"
+							+ "c_test_cases" + File.separator + testSourceFileName + " -o src" + File.separator + "main"
 							+ File.separator + "resources" + File.separator + "compiled_test_cases" + File.separator
-							 + testSourceFileName + " -lcunit");
+							+ testSourceFileName + " -lcunit");
 
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(testCompiler.getErrorStream()));
 
 			while ((compilerOutput = stdError.readLine()) != null) {
-				testCompileLog.add(compilerOutput);
+				compilerModel.addTestCompileLog(compilerOutput);
 				error = true;
-				testCompileLog.add("\n");
+				compilerModel.addTestCompileLog("\n");
 			}
 
 			if (!error)
-				testCompileLog.add("Test esetek sikeresen fordítva.");
-
+				compilerModel.addTestCompileLog("Test esetek sikeresen fordítva.");
 			testCompiler.destroy();
 
 		} catch (IOException e) {
@@ -103,5 +87,5 @@ public class CompilerService {
 		}
 		return error;
 	}
-	
+
 }
