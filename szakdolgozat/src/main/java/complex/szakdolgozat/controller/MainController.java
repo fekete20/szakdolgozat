@@ -117,7 +117,7 @@ public class MainController {
 	}
 
 	@PostMapping("/c_compile")
-	public String cCompile(@RequestParam String solution, @RequestParam(required = false) String params, @RequestParam String route, @RequestParam String path) {
+	public String cCompile(@RequestParam String solution, @RequestParam(required = false) String params, @RequestParam String route, @RequestParam String path){
 		timerService.setFinish();
 		fileService.writeSolutionToFile(solution);
 		timerService.setFinish();

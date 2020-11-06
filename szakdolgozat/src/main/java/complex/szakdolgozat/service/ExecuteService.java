@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -39,7 +40,7 @@ public class ExecuteService {
 		return executeModel.getFailedTestCaseCounter();
 	}
 
-	public void executeCompiledCCode(String sourceFileName, String params) {
+	public void executeCompiledCCode(String sourceFileName, String params){
 		paramService.setParams(params);
 		executeModel.deleteRunLog();
 		executeModel.deleteStdout();
@@ -48,6 +49,15 @@ public class ExecuteService {
 			String output;
 			Process execution = Runtime.getRuntime().exec("./src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "compiled_c_files" + File.separator + sourceFileName);
+			try {
+				if(!execution.waitFor(5, TimeUnit.SECONDS)) {
+					executeModel.addStdout("Timeout!");
+					executeModel.addRunLog("Timeout! (valószínűleg végtelen iteráció)");
+					execution.destroyForcibly();
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			Scanner scanner = new Scanner(execution.getInputStream());
 			if (!paramService.getParams().isEmpty()) {
 				PrintWriter printWriter = new PrintWriter(execution.getOutputStream());
