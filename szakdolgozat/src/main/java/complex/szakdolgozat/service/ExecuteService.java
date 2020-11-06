@@ -40,24 +40,17 @@ public class ExecuteService {
 		return executeModel.getFailedTestCaseCounter();
 	}
 
-	public void executeCompiledCCode(String sourceFileName, String params){
-		paramService.setParams(params);
+	public void executeCompiledCCode(String sourceFileName, String params) {
+
 		executeModel.deleteRunLog();
 		executeModel.deleteStdout();
 
 		try {
 			String output;
+			paramService.setParams(params);
 			Process execution = Runtime.getRuntime().exec("./src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "compiled_c_files" + File.separator + sourceFileName);
-			try {
-				if(!execution.waitFor(5, TimeUnit.SECONDS)) {
-					executeModel.addStdout("Timeout!");
-					executeModel.addRunLog("Timeout! (valószínűleg végtelen iteráció)");
-					execution.destroyForcibly();
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
 			Scanner scanner = new Scanner(execution.getInputStream());
 			if (!paramService.getParams().isEmpty()) {
 				PrintWriter printWriter = new PrintWriter(execution.getOutputStream());
@@ -65,6 +58,15 @@ public class ExecuteService {
 					printWriter.print(param);
 				}
 				printWriter.close();
+			}
+			try {
+				if (!execution.waitFor(5, TimeUnit.SECONDS)) {
+					executeModel.addStdout("Timeout!");
+					executeModel.addRunLog("Timeout! (valószínűleg végtelen iteráció)");
+					execution.destroyForcibly();
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 
 			while (scanner.hasNextLine()) {

@@ -62,7 +62,7 @@ public class AnalyzeService {
 		String[] lowercaseTypes = new String[] { "int ", "double ", "float ", "char " };
 		String[] uppercaseTypes = new String[] { "struct ", "#define " };
 
-		String lowercasePattern = "\\w* [a-z]+.*";
+		String lowercasePattern = "\\s*\\w+ [a-z]+.*"; //"\\w* [a-z]+.*";
 		String uppercasePattern = "(#|\\w)* ([A-Z]+|[A-Z][a-z]*).*";
 
 		analyzeModel.deleteLinesWhereVariableHasIncorrectName();
