@@ -113,6 +113,18 @@ public class MainController {
 		fileService.writeSolutionToFile(solution);
 		timerService.setFinish();
 		
+		executeService.deleteRunLog();
+		executeService.deleteStdout();
+		
+		analyzeService.deleteSimpleOut();
+		analyzeService.deleteDifferenceHalstead();
+		analyzeService.deletePmccabeOutput();
+		analyzeService.deleteAbsDifferenceCyc();
+		analyzeService.deleteRealCyclomaticComplexity();
+		analyzeService.deleteLineString();
+		analyzeService.deleteSimpleOut();
+
+		
 		if(compilerService.compileCSource(fileService.getSourceFileName())) {
 			fileService.deleteSourceFile();
 			return "redirect:/practice?route="+route;

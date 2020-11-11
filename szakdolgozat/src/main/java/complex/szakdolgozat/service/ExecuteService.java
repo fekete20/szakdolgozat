@@ -39,6 +39,14 @@ public class ExecuteService {
 	public int getFailedTestCaseCounter() {
 		return executeModel.getFailedTestCaseCounter();
 	}
+	
+	public void deleteRunLog() {
+		executeModel.deleteRunLog();
+	}
+	
+	public void deleteStdout() {
+		executeModel.deleteStdout();
+	}
 
 	public void executeCompiledCCode(String sourceFileName, String params) {
 

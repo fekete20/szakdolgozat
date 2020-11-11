@@ -45,6 +45,30 @@ public class AnalyzeService {
 		return analyzeModel.getLineString();
 	}
 
+	public void deleteSimpleOut() {
+		analyzeModel.deleteSimpleStaticAnalyzeOutput();
+	}
+
+	public void deleteDifferenceHalstead() {
+		analyzeModel.deleteDifferenceHalstead();
+		}
+
+	public void deletePmccabeOutput() {
+		analyzeModel.deletePmccabeOutput();
+	}
+
+	public void deleteAbsDifferenceCyc() {
+		analyzeModel.deleteAbsDifferenceCyc();
+	}
+
+	public void deleteRealCyclomaticComplexity() {
+		analyzeModel.deleteRealCyclomaticComplexity();
+	}
+
+	public void deleteLineString() {
+		analyzeModel.deleteLineString();
+}
+
 	public void checkNamingConventions(String sourceFileName) {
 		List<String> sourceCode = new ArrayList<>();
 		try {
@@ -62,7 +86,7 @@ public class AnalyzeService {
 		String[] lowercaseTypes = new String[] { "int ", "double ", "float ", "char " };
 		String[] uppercaseTypes = new String[] { "struct ", "#define " };
 
-		String lowercasePattern = "\\s*\\w+ [a-z]+.*"; //"\\w* [a-z]+.*";
+		String lowercasePattern = "\\s*\\w+ [a-z]+.*"; // "\\w* [a-z]+.*";
 		String uppercasePattern = "(#|\\w)* ([A-Z]+|[A-Z][a-z]*).*";
 
 		analyzeModel.deleteLinesWhereVariableHasIncorrectName();
@@ -195,8 +219,8 @@ public class AnalyzeService {
 		analyzeModel.deleteSimpleStaticAnalyzeOutput();
 		try {
 
-			Process simple = Runtime.getRuntime().exec("cppcheck src" + File.separator + "main"
-					+ File.separator + "resources" + File.separator + "c_files" + File.separator + sourceFileName);
+			Process simple = Runtime.getRuntime().exec("cppcheck src" + File.separator + "main" + File.separator
+					+ "resources" + File.separator + "c_files" + File.separator + sourceFileName);
 			Scanner scanner = new Scanner(simple.getInputStream());
 			analyzeModel.addSimpleStaticAnalyzeOutput("Statikus kódelemzés (egyszerű) eredménye: \n");
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(simple.getErrorStream()));

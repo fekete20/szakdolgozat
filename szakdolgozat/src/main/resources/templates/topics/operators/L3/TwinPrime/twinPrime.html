@@ -30,35 +30,23 @@ Paraméterek (a különbözőeknél ;-t kell tenni): <input name="params" id="pa
 
 <h4 id="time" >Idő: <span id="timeSpan" th:text="${elapsedTime}"></span> másodperc.</h4>
 
-<!-- 
-<h4 id="bothH4">Fordítás és futtatás eredménye</h4>
- -->
 <h4 id="compileH4">Fordítás eredménye (GNU-GCC):</h4>
-<!-- Fordítás: -->
 <div id="compilelog" th:each="c: ${compileLog}" th:text="${c}"> </div>
 
 <h4 id="runH4">Futtatás eredménye:</h4>
-<!--Futtatás:-->
 <div id="runlog" th:each="r: ${runLog}" th:text="${r}"></div>
 
 <h4 id="outputH4">Output:</h4>
-<!--Output:-->
 <div id="output" th:each="o: ${stdout}" th:text="${o}"></div>
 
 <h4 id="testCases">Szemantikai teszt eredménye (CUnit): <span id="testCaseSpan" th:text="${passedTestCaseCounter}"></span> sikeres, <span id="testCaseSpan" th:text="${failedTestCaseCounter}"></span> sikertelen.</h4>
-<!-- Test output:-->
-<!--  
-<p th:each="s: ${testRunLog}" th:text="${s}"></p>
--->
+
 <h4 id="staticCodeAnalyzeH4">Statikus kódelemzés (cppcheck):</h4>
-<!-- Simple static analyzing with cppcheck output:-->
 <div id="staticCodeAnalyze" th:each="h: ${simpleOut}" th:text="${h}"></div>
 
 <h4 id="halsteadH4">Halstead komplexitás (Frama-C):</h4>
-<!-- Halstead output (with frama-c):-->
 <div id="halstead" th:each="h: ${halsteadOut}" th:text="${h}"></div>
 
-<!-- Cyclomatic compexity -->
 <h4 id="cycH4">Ciklomatikus komplexitás (pmccabe):</h4>
 <ul>
 	<li id="cycValue">értéke: <span id="cycValueSpan" th:text="${Ecyc}"></span></li>
