@@ -81,6 +81,22 @@ public class FileService {
 		}
 	}
 	
+	public void deleteTemporaryFiles() {
+		File sourceFileName = new File(getSourcePath() + getSourceFileName());
+		sourceFileName.delete();
+		sourceFileName = new File(getCompiledPath() + getSourceFileName());
+		sourceFileName.delete();
+		sourceFileName = new File(getTestSourcePath() + "test" + getSourceFileName());
+		sourceFileName.delete();
+		sourceFileName = new File(getCompiledTestPath() + "test" + getSourceFileName());
+		sourceFileName.delete();
+	}
+	
+	public void deleteSourceFile() {
+		File sourceFileName = new File(getSourcePath() + getSourceFileName());
+		sourceFileName.delete();
+	}
+	
 	public void manageTestFile(String sourceFileName, String path) {
 		List<String> testSource = new ArrayList<>();
 		

@@ -3,9 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>C programozás gyakorlása</title>
-<script type="text/javascript" th:src="@{/textareaHW.js}"></script>
+<script type="text/javascript" th:src="@{/twinPrime.js}"></script>
+<script type="text/javascript" th:src="@{/validateInput.js}"></script>
+<script type="text/javascript" th:src="@{/view.js}"></script>
+
 </head>
-<body onload="fillTextarea()">
+<body onload="fillTextarea(); loadTemplate()">
 <h4> Feladat: Keresse meg és írassa ki 10000-ig az ikerprím számpárokat. (Segítség: az ikerprímek azok a prímszámpárok, amelyek között a különbség 2.) </h4>
 
 <label for="solution">Megoldás:</label>
@@ -25,50 +28,48 @@ Paraméterek (a különbözőeknél ;-t kell tenni): <input name="params" id="pa
 <a href="/endOfTrying">Próbálkozás vége</a>
 
 
-<h4>Idő: <span th:text="${elapsedTime}"></span> másodperc.</h4>
+<h4 id="time" >Idő: <span id="timeSpan" th:text="${elapsedTime}"></span> másodperc.</h4>
 
-<p th:each="t: ${timeList}" th:text="${t}"></p>
-
-<h4>Fordítás és futtatás eredménye</h4>
-
-<h4>Fordítás eredménye:</h4>
+<!-- 
+<h4 id="bothH4">Fordítás és futtatás eredménye</h4>
+ -->
+<h4 id="compileH4">Fordítás eredménye (GNU-GCC):</h4>
 <!-- Fordítás: -->
-<p th:each="c: ${compileLog}" th:text="${c}"> </p>
+<div id="compilelog" th:each="c: ${compileLog}" th:text="${c}"> </div>
 
-<h4>Futtatás eredménye:</h4>
+<h4 id="runH4">Futtatás eredménye:</h4>
 <!--Futtatás:-->
-<p th:each="r: ${runLog}" th:text="${r}"></p>
+<div id="runlog" th:each="r: ${runLog}" th:text="${r}"></div>
 
-<h4>Output:</h4>
+<h4 id="outputH4">Output:</h4>
 <!--Output:-->
-<p th:each="o: ${stdout}" th:text="${o}"></p>
+<div id="output" th:each="o: ${stdout}" th:text="${o}"></div>
 
-<h4>Szemantikai teszt eredménye: <span th:text="${passedTestCaseCounter}"></span> sikeres, <span th:text="${failedTestCaseCounter}"></span> sikertelen.</h4>
+<h4 id="testCases">Szemantikai teszt eredménye (CUnit): <span id="testCaseSpan" th:text="${passedTestCaseCounter}"></span> sikeres, <span id="testCaseSpan" th:text="${failedTestCaseCounter}"></span> sikertelen.</h4>
 <!-- Test output:-->
 <!--  
 <p th:each="s: ${testRunLog}" th:text="${s}"></p>
 -->
-<h4>Statikus kódelemzés:</h4>
+<h4 id="staticCodeAnalyzeH4">Statikus kódelemzés (cppcheck):</h4>
 <!-- Simple static analyzing with cppcheck output:-->
-<p th:each="h: ${simpleOut}" th:text="${h}"></p>
+<div id="staticCodeAnalyze" th:each="h: ${simpleOut}" th:text="${h}"></div>
 
-<h4>Halstead komplexitás:</h4>
+<h4 id="halsteadH4">Halstead komplexitás (Frama-C):</h4>
 <!-- Halstead output (with frama-c):-->
-<p th:each="h: ${halsteadOut}" th:text="${h}"></p>
+<div id="halstead" th:each="h: ${halsteadOut}" th:text="${h}"></div>
 
 <!-- Cyclomatic compexity -->
-<h4>Ciklomatikus komplexitás:</h4>
+<h4 id="cycH4">Ciklomatikus komplexitás (pmccabe):</h4>
 <ul>
-	<li>értéke: <span th:text="${Ecyc}"></span></li>
-	<li>abszolút eltérés a mintamegoldástól: <span th:text="${absDiffCyc}"></span> </li>
-	<li>százalékos eltérés a mintamegoldástól: <span th:text="${cyc}"></span></li>
-
+	<li id="cycValue">értéke: <span id="cycValueSpan" th:text="${Ecyc}"></span></li>
+	<li id="cycAbsDiff">abszolút eltérés a mintamegoldástól: <span id="cycAbsDiffSpan" th:text="${absDiffCyc}"></span> </li>
+	<li id="cycPerDiff">százalékos eltérés a mintamegoldástól: <span id="cycPerDiffSpan" th:text="${cyc}"></span></li>
 </ul>
 
 
 <!-- Naming conventions -->
-<h4>Névkonvenciók:
-<span th:text="${namingConventions}"></span></h4>
+<h4 id="namingConventionsH4">Névkonvenciók:
+<span id="namingConventionsSpan" th:text="${namingConventions}"></span></h4>
 
 
 	

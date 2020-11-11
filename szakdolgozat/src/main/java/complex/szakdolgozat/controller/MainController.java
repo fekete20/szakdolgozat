@@ -1,7 +1,5 @@
 package complex.szakdolgozat.controller;
 
-import java.io.File;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -116,6 +114,7 @@ public class MainController {
 		timerService.setFinish();
 		
 		if(compilerService.compileCSource(fileService.getSourceFileName())) {
+			fileService.deleteSourceFile();
 			return "redirect:/practice?route="+route;
 		}
 		executeService.executeCompiledCCode(fileService.getSourceFileName(), params);
@@ -131,16 +130,8 @@ public class MainController {
 		analyzeService.calculateCyclomaticComplexity(fileService.getSourceFileName(), path);
 		analyzeService.calculateHalstead(fileService.getSourceFileName(), path);
 		analyzeService.checkNamingConventions(fileService.getSourceFileName());
+		fileService.deleteTemporaryFiles();
 		
-		File sourceFileName = new File(fileService.getSourcePath() + fileService.getSourceFileName());
-		sourceFileName.delete();
-		sourceFileName = new File(fileService.getCompiledPath() + fileService.getSourceFileName());
-		sourceFileName.delete();
-		sourceFileName = new File(fileService.getTestSourcePath() + "test" + fileService.getSourceFileName());
-		sourceFileName.delete();
-		sourceFileName = new File(fileService.getCompiledTestPath() + "test" + fileService.getSourceFileName());
-		sourceFileName.delete();
-
 		return "redirect:/practice?route="+route;
 	}
 }
