@@ -1,0 +1,42 @@
+.guideContent {
+	margin-left: auto;
+ 	margin-right: auto;
+	text-align: justify;
+	width: 70%;	
+}
+
+strong {
+	color: red;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f4f5f2;
+	font-size: 19px;
+	text-align: center;
+}
+
+.submit {
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 18px;
+	background-color: green;
+	border-radius: 5px;
+}
+
+.submit:hover {
+	background-color: red;
+}
+
+.submit:active {
+	background-color: black;
+	transition-delay: 0.15s;
+}
+
+.selector {
+	padding: 12.5px;
+	font-size: 20px;
+	width: 20%;
+}
+

@@ -3,35 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <title>Témakör és szint kiválasztása</title>
+<link th:href="@{/homepageStyle.css}" rel="stylesheet" />
 </head>
 <body>
 <h2>Témakör és szint kiválasztása</h2>
 
-<!--  
-<h4>Az előző feladat megoldásával eltelt idő: <span th:text="${elapsedTime}"></span> másodperc.</h4>
-
--->
-
-<p th:each="t: ${timeList}" th:text="${t}"></p>
 <form method="post" action="selectTopic">
-	<label for="topic">Témakör: </label>
-	<select id="topic" name="topic">
-		<option value="ops">operátorok</option>
-		<option value="arrays">tömbök</option>
-		<option value="strings">sztringkezelés</option>
-		<option value="structs">struktúrák</option>
-		
+	<label for="topic">Témakör: </label><br>
+	<select class="selector" id="topic" name="topic">
+		<option value="ops">Operátorok</option>
+		<option value="arrays">Tömbök</option>
+		<option value="strings">Sztringkezelés</option>
+		<option value="structs">Struktúrák</option>
 	</select>
-	<label for="level">Szint: </label>
-	<select id="level" name="level">
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-		
+	<p></p>
+	<label for="level">Nehézségi szint: </label><br>
+	<select class="selector" id="level" name="level">
+		<option value="2">2. szint (könnyű)</option>
+		<option value="3">3. szint (alig nehéz)</option>
+		<option value="4">4. szint (kissé nehéz)</option>
+		<option value="5">5. szint (nehéz)</option>
 	</select>
-	
-	<input type="submit"> 
+	<p></p>
+	<input type="submit" class="submit" value="Továbblépés a feladathoz"> 
 </form>
+
+<p></p>
+<h2>Felhasználói leírás</h2>
+<h4>Kedves Felhasználó!</h4>
+
+<div class="guideContent">
+<p><strong>FIGYELEM! A rendszerrel beküldött megoldások nem kerülnek eltárolásra, azok az oldalról történő elnavigálás vagy a böngésző(lap) 
+bezárása után elvesznek.</strong></p>
+<p>A fenti két legördülő lista segítségével van lehetőség C programozási feladatot kiválasztani témakör és nehézségi szint alapján.
+A feladat kiválasztása után a "Továbblépés a feladathoz" gomb megnyomásával betöltődik a választott témakörnek és szintnek megfelelő feladat.</p>
+<p>A feladatot tartalmazó oldalon megjelenik a feladat kiírása, ez alatt pedig egy beviteli mező a megoldáshoz, amely szükség esetén
+ átméretezhető a jobb alsó sarkának egérrel történő húzásával. </p>
+<p>A beviteli mező alatti kisebb méretű mezőben adhatók meg a megírt program bemenő paraméterei. Több bemenő paraméter esetén a különböző
+ paramétereket ; (pontosvessző) karakterrel kell elválasztani.</p>
+<p>A "Kód kiértékelése" gombra kattintással a megoldás és a megadott paraméterek elküldésre kerülnek a böngészőből a szervernek.
+ Ebből következik, hogy <strong>az esetleges bemenő paramétereket mindig előre meg kell adni</strong>. A szerver ellenőrzi a
+  beküldött kódot, majd a böngészőben megjelenik az ellenőrzés eredménye.</p>
+ <p>Amennyiben a futtatás eredményénél és az output-nál (a program kimenete) <i>Timeout!</i> üzenet látható, akkor az elküldött
+  programkód nem futott le az előre beállított időkereten belül. Ez azt jelenti, hogy valószínűleg végtelen ciklusba került
+   vagy bármilyen más ok miatt irreálisan hosszú ideig fut. A rendszerben lévő feladatoknak helyes megoldás esetén a beállított
+    időkereten belül le kell futni.<p>
+ <p>A Halstead-komplexitás a forráskód bonyolultságának jellemzésére alkalmas, a különböző mérőszámok értékeit a feladat megoldásához 
+ használt operátorok, operandusok mennyisége befolyásolja. A felületen a beküldött megoldás mérőszámai, illetve ezeknek egy, 
+ az adott feladathoz előgyártott mintamegoldás mérőszámaitól történő eltérésük látható.</p>
+ <p>A ciklomatikus komplexitás ugyancsak a kód összetettségét méri, ennek értéke a felhasznált iterációk és elágazások számán alapul. 
+ A felületen függvényekre lebontva látható a beküldött megoldás ciklomatikus komplexitása, illetve ennek egy, 
+ az adott feladathoz előgyártott mintamegoldás ciklomatikus komplexitásától történő eltérések. </p>
+<p>A kiértékelés végén azok a kódsorok vannak felsorolva, ahol a programozó nem tartotta be a konvenciókat: itt 
+a rendszer globális változó és a nagy kezdőbetűs lokális változó deklarációkra hívja fel a figyelmet.</p>
+</div>
 </body>
 </html>
