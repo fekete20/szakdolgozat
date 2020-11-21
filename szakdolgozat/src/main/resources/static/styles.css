@@ -1,0 +1,83 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f4f5f2;
+	font-size: 19px;
+}
+
+p {
+	font-weight: bold;
+}
+
+div, li {
+	font-family:Consolas, monospace;
+}
+
+textarea {
+	background-color: #f4f5f2;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 17px;
+}
+
+.params {
+	background-color: #f4f5f2;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 15px;
+	padding: 8px;
+	border-radius: 5px;
+}
+
+.submit {
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 18px;
+	background-color: green;
+	border-radius: 5px;
+}
+
+.submit:hover {
+	background-color: red;
+}
+
+.submit:active {
+	background-color: black;
+	transition-delay: 0.15s;
+}
+
+textarea:focus, .params:focus {
+	background-color: white;
+}
+
+table {
+	width: 100%;
+	table-layout: auto;
+	background-color: #71d10a;
+	color: white;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+td {
+	padding: 25px;
+	vertical-align: center;
+}
+
+.align-right {
+	text-align: right;
+	
+}
+
+a {
+	text-decoration: none;
+	padding: 27.5px;
+	color: white;
+	background-color: #ff0000;
+}
+a:hover {
+	background-color: #9c3f1e;
+	transition-delay: 0.15s;
+}
+
+a:active {
+	background-color: #030303;
+}

@@ -40,37 +40,37 @@ public class MainController {
 		timerService.stop();
 		timerService.setStart();
 		if (topic.equals("ops") && level.equals("2")) {
-			return "topics/operators/L2/Teglalap/teglalap";
+			return "topics/operators/L2/Teglalap/feladat";
 		} else if (topic.equals("ops") && level.equals("3")) {
-			return "topics/operators/L3/TwinPrime/twinPrime";
+			return "topics/operators/L3/Osztok/feladat";
 		} else if (topic.equals("ops") && level.equals("4")) {
-			return "topics/operators/L4/Even/even";
+			return "topics/operators/L4/TwinPrime/feladat";
 		} else if (topic.equals("ops") && level.equals("5")) {
-			return "topics/operators/L5/Factorial/factorial";
+			return "topics/operators/L5/Tokeletes_szam/feladat";
 		} else if (topic.equals("arrays") && level.equals("2")) {
-			return "404";
+			return "topics/arrays/L2/Szamtani_mertani_avg/feladat";
 		} else if (topic.equals("arrays") && level.equals("3")) {
-			return "404";
+			return "topics/arrays/L3/Linearis_kereses/feladat";
 		} else if (topic.equals("arrays") && level.equals("4")) {
-			return "404";
+			return "topics/arrays/L4/Lotto/feladat";
 		} else if (topic.equals("arrays") && level.equals("5")) {
-			return "404";
+			return "topics/arrays/L5/Euro/feladat";
 		} else if (topic.equals("strings") && level.equals("2")) {
-			return "404";
+			return "topics/strings/L2/Karakter_kereses/feladat";
 		} else if (topic.equals("strings") && level.equals("3")) {
-			return "404";
+			return "topics/strings/L3/Szoveg_megforditas/feladat";
 		} else if (topic.equals("strings") && level.equals("4")) {
-			return "404";
+			return "topics/strings/L4/Szoveg_kis_nagybetu/feladat";
 		} else if (topic.equals("strings") && level.equals("5")) {
-			return "404";
+			return "topics/strings/L5/Palindrom/feladat";
 		} else if (topic.equals("structs") && level.equals("2")) {
-			return "404";
+			return "topics/struct/L2/Kor_atfedes/feladat";
 		} else if (topic.equals("structs") && level.equals("3")) {
-			return "404";
+			return "topics/struct/L3/Datum_regebbi/feladat";
 		} else if (topic.equals("structs") && level.equals("4")) {
-			return "404";
+			return "topics/struct/L4/CD_modosit/feladat";
 		} else if (topic.equals("structs") && level.equals("5")) {
-			return "404";
+			return "topics/struct/L5/Komplex/feladat";
 		} else {
 			return "404";
 		}
@@ -84,12 +84,11 @@ public class MainController {
 		mav.addObject("runLog", executeService.getRunLog());
 		mav.addObject("stdout", executeService.getStdout());
 		mav.addObject("solution", fileService.getSolution());
-		mav.addObject("testRunLog", executeService.getTestRunLog());
 		mav.addObject("simpleOut", analyzeService.getSimpleOut());
 		mav.addObject("halsteadOut", analyzeService.getDifferenceHalstead());
-		mav.addObject("cyc", analyzeService.getCy());
+		mav.addObject("percentDiffCyc", analyzeService.getCy());
 		mav.addObject("absDiffCyc", analyzeService.getAbsDifferenceCyc());
-		mav.addObject("Ecyc", analyzeService.getCyc());
+		mav.addObject("cyc", analyzeService.getCyc());
 		mav.addObject("namingConventions", analyzeService.getLineString());
 		mav.addObject("passedTestCaseCounter", executeService.getPassedTestCaseCounter());
 		mav.addObject("failedTestCaseCounter", executeService.getFailedTestCaseCounter());
@@ -103,7 +102,6 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("selectTopic");
 		timerService.stop();
-
 		return mav;
 	}
 
@@ -115,7 +113,6 @@ public class MainController {
 		
 		executeService.deleteRunLog();
 		executeService.deleteStdout();
-		
 		analyzeService.deleteSimpleOut();
 		analyzeService.deleteDifferenceHalstead();
 		analyzeService.deletePmccabeOutput();
@@ -123,8 +120,7 @@ public class MainController {
 		analyzeService.deleteRealCyclomaticComplexity();
 		analyzeService.deleteLineString();
 		analyzeService.deleteSimpleOut();
-
-		
+	
 		if(compilerService.compileCSource(fileService.getSourceFileName())) {
 			fileService.deleteSourceFile();
 			return "redirect:/practice?route="+route;
@@ -132,11 +128,6 @@ public class MainController {
 		executeService.executeCompiledCCode(fileService.getSourceFileName(), params);
 		fileService.manageTestFile(fileService.getSourceFileName(), path);
 		compilerService.compileTestSource("test" + fileService.getSourceFileName());
-// teszt fordítási hiba esetére:	
-/*		if(compilerService.compileTestSource("test" + fileService.getSourceFileName())) {
-			return "redirect:/practice?route="+route;
-		}
-*/		
 		executeService.executeTestCases("test" + fileService.getSourceFileName());
 		analyzeService.simpleStaticAnalyze(fileService.getSourceFileName());
 		analyzeService.calculateCyclomaticComplexity(fileService.getSourceFileName(), path);

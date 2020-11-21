@@ -109,7 +109,7 @@ public class FileService {
 			sc.close();
 						
 			for(String line : testSource) {
-				if(line.contains("#include \"../c_files")) {
+				if(line.contains("#include \"main.c")) {
 					testSource.set(testSource.indexOf(line), "#include \"../c_files/"+sourceFileName+"\"");
 				}
 			}

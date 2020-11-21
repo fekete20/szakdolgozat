@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>C programozás gyakorlása</title>
+<script type="text/javascript" th:src="@{/js-feladatok/Szamtani_mertani_avg.js}"></script>
+<script type="text/javascript" th:src="@{/validateInput.js}"></script>
+<script type="text/javascript" th:src="@{/view.js}"></script>
+<link th:href="@{/styles.css}" rel="stylesheet" />
+
+</head>
+
+<body onload="fillTextarea(); loadTemplate()">
+
+<table>
+	<tr>
+		<td>Témakör: Egydimenziós tömbök</td>
+		<td>2. szint</td>
+		<td class="align-right"><a href="/endOfTrying">Próbálkozás vége</a></td>
+	</tr>
+</table>
+
+<p>Olvasson be egy tömbbe tetszőleges számú egész számot, majd számolja ki ezek számtani és mértani átlagát! A megoldáshoz szimbolikus konstansként definiálja (pl. #define N 5) a tömb méretét és használja fel a betöltött kódvázat!</p>
+
+<label for="solution">Megoldás:</label>
+<br>
+<form onsubmit="return validateInput();" name="solutionSend" method="post" action="c_compile">
+
+<textarea th:text="${solution}" name="solution" id="solution" rows="15" cols="100"></textarea>
+<p>
+Paraméterek (a különbözőeket ; karakterrel kell elválasztani): <input class="params" name="params" id="params"/>
+<p>	
+<input type="hidden" name="route" value="topics/arrays/L2/Szamtani_mertani_avg/feladat">
+<input type="hidden" name="path" value="/arrays/L2/Szamtani_mertani_avg/">
+<input class="submit" type="submit" value="Kód kiértékelése">	
+</form>
+
+<p>
+
+<h4 id="time" >Idő: <span id="timeSpan" th:text="${elapsedTime}"></span> másodperc.</h4>
+
+<h4 id="compileH4">Fordítás eredménye (GNU-GCC):</h4>
+<div id="compilelog" th:each="c: ${compileLog}" th:text="${c}"> </div>
+
+<h4 id="runH4">Futtatás eredménye:</h4>
+<div id="runlog" th:each="r: ${runLog}" th:text="${r}"></div>
+
+<h4 id="outputH4">Output:</h4>
+<div id="output" th:each="o: ${stdout}" th:text="${o}"></div>
+
+<h4 id="testCases">Szemantikai teszt eredménye (CUnit): <span id="testCaseSpan" th:text="${passedTestCaseCounter}"></span> sikeres, <span id="testCaseSpan" th:text="${failedTestCaseCounter}"></span> sikertelen.</h4>
+
+<h4 id="staticCodeAnalyzeH4">Statikus kódelemzés (cppcheck):</h4>
+<div id="staticCodeAnalyze" th:each="h: ${simpleOut}" th:text="${h}"></div>
+
+<h4 id="halsteadH4">Halstead komplexitás (Frama-C):</h4>
+<div id="halstead" th:each="h: ${halsteadOut}" th:text="${h}"></div>
+
+<h4 id="cycH4">Ciklomatikus komplexitás (pmccabe):</h4>
+<ul>
+	<li id="cycValue">értéke: <span id="cycValueSpan" th:text="${cyc}"></span></li>
+	<li id="cycAbsDiff">abszolút eltérés a mintamegoldástól: <span id="cycAbsDiffSpan" th:text="${absDiffCyc}"></span> </li>
+	<li id="cycPerDiff">százalékos eltérés a mintamegoldástól: <span id="cycPerDiffSpan" th:text="${percentDiffCyc}"></span></li>
+</ul>
+
+<h4 id="namingConventionsH4">Névkonvenciók:
+<span id="namingConventionsSpan" th:text="${namingConventions}"></span></h4>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>C programozás gyakorlása</title>
+<script type="text/javascript" th:src="@{/js-feladatok/Komplex.js}"></script>
+<script type="text/javascript" th:src="@{/validateInput.js}"></script>
+<script type="text/javascript" th:src="@{/view.js}"></script>
+<link th:href="@{/styles.css}" rel="stylesheet" />
+
+</head>
+
+<body onload="fillTextarea(); loadTemplate()">
+
+<table>
+	<tr>
+		<td>Témakör: Struktúrák</td>
+		<td>5. szint</td>
+		<td class="align-right"><a href="/endOfTrying">Próbálkozás vége</a></td>
+	</tr>
+</table>
+
+<p>Készítsen C programot a másodfokú egyismeretlenes egyenletek megoldásához struktúrák használatával. Az ilyen egyenletek általános alakja: ax<sup>2</sup> + bx + c = 0, ahol a, b és c konstansok. <br>
+Ha a=0, de b és c nem 0, az egyenlet elsőfokú, megoldása: x = -c/b.<br>
+Ha c=0, de a és b nem 0, az egyenlet hiányos, megoldásai: x<sub>1</sub> = 0, x<sub>2</sub> = -b/a.<br>
+Ha b=0, de a és c nem 0, az egyenlet tiszta másodfokú, megoldásai: x<sub>1</sub>, x<sub>2</sub> = +- sqrt(-c/a)<br>
+Ha mindhárom konstans 0, akkor bármely szám megoldás.<br>
+Ha a és b 0, viszont c nem, akkor nincs megoldás.<br>
+A megoldóképletben a gyök alatti kifejezés (b<sup>2</sup>-4ac) a másodfokú egyenlet diszkriminánsa. <br>
+Ha d&gt;0, akkor az egyenletnek két valós gyöke van. <br>
+Ha d=0, az egyenletnek egy valós gyöke van (x<sub>1</sub>=x<sub>2</sub>).<br>
+Ha d&lt;0 az egyenletnek két komplex gyöke van.<br>
+A megoldáshoz használja fel a betöltött kódvázat!</p>
+
+<label for="solution">Megoldás:</label>
+<br>
+<form onsubmit="return validateInput();" name="solutionSend" method="post" action="c_compile">
+
+<textarea th:text="${solution}" name="solution" id="solution" rows="15" cols="100"></textarea>
+<p>
+Paraméterek (a különbözőeket ; karakterrel kell elválasztani): <input class="params" name="params" id="params"/>
+<p>	
+<input type="hidden" name="route" value="topics/struct/L5/Komplex/feladat">
+<input type="hidden" name="path" value="/struct/L5/Komplex/">
+<input class="submit" type="submit" value="Kód kiértékelése">	
+</form>
+
+<p>
+
+<h4 id="time" >Idő: <span id="timeSpan" th:text="${elapsedTime}"></span> másodperc.</h4>
+
+<h4 id="compileH4">Fordítás eredménye (GNU-GCC):</h4>
+<div id="compilelog" th:each="c: ${compileLog}" th:text="${c}"> </div>
+
+<h4 id="runH4">Futtatás eredménye:</h4>
+<div id="runlog" th:each="r: ${runLog}" th:text="${r}"></div>
+
+<h4 id="outputH4">Output:</h4>
+<div id="output" th:each="o: ${stdout}" th:text="${o}"></div>
+
+<h4 id="testCases">Szemantikai teszt eredménye (CUnit): <span id="testCaseSpan" th:text="${passedTestCaseCounter}"></span> sikeres, <span id="testCaseSpan" th:text="${failedTestCaseCounter}"></span> sikertelen.</h4>
+
+<h4 id="staticCodeAnalyzeH4">Statikus kódelemzés (cppcheck):</h4>
+<div id="staticCodeAnalyze" th:each="h: ${simpleOut}" th:text="${h}"></div>
+
+<h4 id="halsteadH4">Halstead komplexitás (Frama-C):</h4>
+<div id="halstead" th:each="h: ${halsteadOut}" th:text="${h}"></div>
+
+<h4 id="cycH4">Ciklomatikus komplexitás (pmccabe):</h4>
+<ul>
+	<li id="cycValue">értéke: <span id="cycValueSpan" th:text="${cyc}"></span></li>
+	<li id="cycAbsDiff">abszolút eltérés a mintamegoldástól: <span id="cycAbsDiffSpan" th:text="${absDiffCyc}"></span> </li>
+	<li id="cycPerDiff">százalékos eltérés a mintamegoldástól: <span id="cycPerDiffSpan" th:text="${percentDiffCyc}"></span></li>
+</ul>
+
+<h4 id="namingConventionsH4">Névkonvenciók:
+<span id="namingConventionsSpan" th:text="${namingConventions}"></span></h4>
+
+</body>
+</html>

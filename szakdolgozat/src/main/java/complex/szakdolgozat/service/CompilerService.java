@@ -23,7 +23,6 @@ public class CompilerService {
 
 	public boolean compileCSource(String sourceFileName) {
 		boolean error = false;
-
 		compilerModel.deleteCompileLog();
 
 		try {
@@ -68,7 +67,7 @@ public class CompilerService {
 					.exec("gcc " + "src" + File.separator + "main" + File.separator + "resources" + File.separator
 							+ "c_test_cases" + File.separator + testSourceFileName + " -o src" + File.separator + "main"
 							+ File.separator + "resources" + File.separator + "compiled_test_cases" + File.separator
-							+ testSourceFileName + " -lcunit");
+							+ testSourceFileName + " -lm -lcunit");
 
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(testCompiler.getErrorStream()));
 
@@ -80,6 +79,8 @@ public class CompilerService {
 
 			if (!error)
 				compilerModel.addTestCompileLog("Test esetek sikeresen fordítva.");
+			
+			System.out.println(compilerModel.getTestCompileLog());
 			testCompiler.destroy();
 
 		} catch (IOException e) {

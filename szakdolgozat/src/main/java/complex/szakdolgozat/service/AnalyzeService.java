@@ -51,7 +51,7 @@ public class AnalyzeService {
 
 	public void deleteDifferenceHalstead() {
 		analyzeModel.deleteDifferenceHalstead();
-		}
+	}
 
 	public void deletePmccabeOutput() {
 		analyzeModel.deletePmccabeOutput();
@@ -67,7 +67,7 @@ public class AnalyzeService {
 
 	public void deleteLineString() {
 		analyzeModel.deleteLineString();
-}
+	}
 
 	public void checkNamingConventions(String sourceFileName) {
 		List<String> sourceCode = new ArrayList<>();
@@ -222,14 +222,15 @@ public class AnalyzeService {
 			Process simple = Runtime.getRuntime().exec("cppcheck src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "c_files" + File.separator + sourceFileName);
 			Scanner scanner = new Scanner(simple.getInputStream());
-			analyzeModel.addSimpleStaticAnalyzeOutput("Statikus kódelemzés (egyszerű) eredménye: \n");
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(simple.getErrorStream()));
-			while (scanner.hasNextLine()) {
-				analyzeModel.addSimpleStaticAnalyzeOutput(scanner.nextLine());
-			}
 			String temp;
-			while ((temp = stdError.readLine()) != null) {
+			if ((temp = stdError.readLine()) == null) {
+				analyzeModel.addSimpleStaticAnalyzeOutput("Nincs probléma.");
+			} else {
 				analyzeModel.addSimpleStaticAnalyzeOutput(temp);
+				while ((temp = stdError.readLine()) != null) {
+					analyzeModel.addSimpleStaticAnalyzeOutput(temp);
+				}
 			}
 			scanner.close();
 			simple.destroy();
