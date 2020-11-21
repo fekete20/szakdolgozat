@@ -3,7 +3,7 @@
 
 #define N 255
 
-char* megfordit(char *szoveg);
+char* megfordit(char szoveg[]);
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
     return 0;
 }
 
-char* megfordit(char *szoveg) {
+char* megfordit(char szoveg[]) {
     char *p = szoveg;
     char seged;
     int i, j;

@@ -2,6 +2,8 @@
 #include "main.c"
 #undef main
 
+#define MERET 5
+
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 

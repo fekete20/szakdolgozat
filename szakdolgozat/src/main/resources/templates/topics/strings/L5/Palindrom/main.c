@@ -3,7 +3,7 @@
 #include <ctype.h>
 #define N 100
 
-int palindroma(char* szoveg);
+int palindroma(char szoveg[]);
 
 int main() {
      char szoveg[N];
@@ -20,7 +20,7 @@ int main() {
         printf("Panindroma: %s", palindroma(szoveg) ? "igen" : "nem");
      return 0;
 }
-int palindroma(char* str) {
+int palindroma(char str[]) {
     char* ptr;
     char* aux;
 

@@ -3,7 +3,7 @@
 #include <ctype.h>
 #define N 27
 
-int keres(char keresett, char *tomb);
+int keres(char keresett, char tomb[]);
 
 int main()
 {
@@ -20,7 +20,7 @@ int main()
  return 0;
 }
 
-int keres(char key, char *tomb) {
+int keres(char key, char tomb[]) {
     int talalt = 0;
     int i = 0;
     if (isalpha(key)) {

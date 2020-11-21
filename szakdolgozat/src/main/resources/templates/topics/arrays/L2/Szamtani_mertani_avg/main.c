@@ -3,8 +3,8 @@
 
 #define N 5
 
-double szamtaniAtlag(int *tomb);
-double mertaniAtlag(int *tomb);
+double szamtaniAtlag(int tomb[]);
+double mertaniAtlag(int tomb[]);
 
 int main() {
      int tomb[N];
@@ -19,14 +19,14 @@ int main() {
 
      return 0;
 }
-double szamtaniAtlag(int *tomb) {
+double szamtaniAtlag(int tomb[]) {
      int i;
      double osszeg=0;
      for(i=0; i<N; i++)
          osszeg += tomb[i];
      return osszeg/N;
 }
-double mertaniAtlag(int *tomb) {
+double mertaniAtlag(int tomb[]) {
  int i;
  double szorzat=1;
  for(i=0; i<N; i++)
