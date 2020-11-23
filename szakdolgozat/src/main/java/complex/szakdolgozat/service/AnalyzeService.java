@@ -86,7 +86,7 @@ public class AnalyzeService {
 		String[] lowercaseTypes = new String[] { "int ", "double ", "float ", "char ", "struct "};
 		String[] uppercaseTypes = new String[] { "#define " };
 
-		String lowercasePattern = "\\s*\\w+ \\*|([a-z]+).*";
+		String lowercasePattern = "\\s*\\w+ [a-z]+.*";
 		String uppercasePattern = "(#|\\w)* ([A-Z]+|[A-Z][a-z]*).*";
 
 		analyzeModel.deleteLinesWhereVariableHasIncorrectName();
@@ -293,9 +293,9 @@ public class AnalyzeService {
 			for (int i = 0, j = 0; j < matches.size(); i++) {
 				if (i % 2 == 0) {
 					analyzeModel.addPercentageDifferenceCyclomaticComplexity(matches.get(j) + ": "
-							+ (((Double.parseDouble(userCyclomaticComplexityList.get(i))
+							+ (df2.format(((Double.parseDouble(userCyclomaticComplexityList.get(i))
 									- Double.parseDouble(sampleCyclomaticComplexity.get(i)))
-									/ Double.parseDouble(sampleCyclomaticComplexity.get(i))) * 100 + "%"));
+									/ Double.parseDouble(sampleCyclomaticComplexity.get(i))) * 100)) + "%");
 					analyzeModel.addAbsoluteDifferenceCyclomaticComplexity(
 							matches.get(j) + ": " + (Integer.parseInt(userCyclomaticComplexityList.get(i))
 									- Integer.parseInt(sampleCyclomaticComplexity.get(i))));

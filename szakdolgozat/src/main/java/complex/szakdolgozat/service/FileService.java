@@ -65,13 +65,12 @@ public class FileService {
 		try {
 			solutionString = solution;
 			setSourceFileName();
-			File file = new File(getSourcePath() + getSourceFileName());
+			File file = new File(System.getProperty("user.dir"), getSourcePath() + getSourceFileName());
 
 			if (file.createNewFile()) {
 				FileWriter fileWriter = new FileWriter(getSourcePath() + getSourceFileName());
 				fileWriter.write(solution);
 				fileWriter.close();
-
 			} else {
 				System.err.println("A fájl már létezik.");
 			}
