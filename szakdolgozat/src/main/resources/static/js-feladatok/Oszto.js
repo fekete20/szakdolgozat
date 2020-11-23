@@ -9,7 +9,7 @@ function fillTextarea() {
 			"     return 0;\n" + 
 			" }\n" + 
 			"\n" + 
-			" int osztoSzamlal(int szam) {\n" + 
+			"int osztoSzamlal(int szam) {\n" + 
 			"    //osztók megszámlálása\n" + 
 			" }";
 	

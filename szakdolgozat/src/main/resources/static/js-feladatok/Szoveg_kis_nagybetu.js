@@ -5,8 +5,8 @@ function fillTextarea() {
 			"\n" + 
 			"//tömb méretének definiálása\n" + 
 			"\n" + 
-			"char* kisbetusit(char *szoveg);\n" + 
-			"char* nagybetusit(char *szoveg);\n" + 
+			"char *kisbetusit(char *szoveg);\n" + 
+			"char *nagybetusit(char *szoveg);\n" + 
 			"\n" + 
 			"int main()\n" + 
 			"{\n" + 
@@ -15,11 +15,11 @@ function fillTextarea() {
 			"    return 0;\n" + 
 			"}\n" + 
 			"\n" + 
-			"char* kisbetusit(char *szoveg) {\n" + 
+			"char *kisbetusit(char *szoveg) {\n" + 
 			"    //kisbetűsítés\n" + 
 			"}\n" + 
 			"\n" + 
-			"char* nagybetusit(char *szoveg) {\n" + 
+			"char *nagybetusit(char *szoveg) {\n" + 
 			"    //nagybetűsítés\n" + 
 			"}\n";
 	

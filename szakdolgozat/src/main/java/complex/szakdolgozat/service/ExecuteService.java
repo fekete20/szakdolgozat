@@ -39,11 +39,11 @@ public class ExecuteService {
 	public int getFailedTestCaseCounter() {
 		return executeModel.getFailedTestCaseCounter();
 	}
-	
+
 	public void deleteRunLog() {
 		executeModel.deleteRunLog();
 	}
-	
+
 	public void deleteStdout() {
 		executeModel.deleteStdout();
 	}
@@ -54,11 +54,10 @@ public class ExecuteService {
 		executeModel.deleteStdout();
 
 		try {
-			String output;
+			String output = "";
 			paramService.setParams(params);
 			Process execution = Runtime.getRuntime().exec("./src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "compiled_c_files" + File.separator + sourceFileName);
-
 			Scanner scanner = new Scanner(execution.getInputStream());
 			if (!paramService.getParams().isEmpty()) {
 				PrintWriter printWriter = new PrintWriter(execution.getOutputStream());
@@ -67,29 +66,29 @@ public class ExecuteService {
 				}
 				printWriter.close();
 			}
+
 			try {
 				if (!execution.waitFor(5, TimeUnit.SECONDS)) {
+					executeModel.addRunLog("Timeout!");
 					executeModel.addStdout("Timeout!");
-					executeModel.addRunLog("Timeout! (valószínűleg végtelen iteráció)");
 					execution.destroyForcibly();
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
-			while (scanner.hasNextLine()) {
-				executeModel.addStdout(scanner.nextLine());
-			}
-			scanner.close();
-
-			BufferedReader stdError = new BufferedReader(new InputStreamReader(execution.getErrorStream()));
+			
 			boolean error = false;
-
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(execution.getErrorStream()));
 			while ((output = stdError.readLine()) != null) {
 				executeModel.addRunLog(output);
 				error = true;
 				executeModel.addRunLog("\n");
 			}
+			while (scanner.hasNextLine()) {
+				executeModel.addStdout(scanner.nextLine());
+			}
+			scanner.close();
+
 			if (!error)
 				executeModel.addRunLog("sikeresen futtatva.");
 			execution.destroy();

@@ -79,8 +79,7 @@ public class CompilerService {
 
 			if (!error)
 				compilerModel.addTestCompileLog("Test esetek sikeresen fordítva.");
-			
-			System.out.println(compilerModel.getTestCompileLog());
+
 			testCompiler.destroy();
 
 		} catch (IOException e) {

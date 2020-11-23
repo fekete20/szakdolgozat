@@ -83,10 +83,10 @@ public class AnalyzeService {
 			e.printStackTrace();
 		}
 
-		String[] lowercaseTypes = new String[] { "int ", "double ", "float ", "char " };
-		String[] uppercaseTypes = new String[] { "struct ", "#define " };
+		String[] lowercaseTypes = new String[] { "int ", "double ", "float ", "char ", "struct "};
+		String[] uppercaseTypes = new String[] { "#define " };
 
-		String lowercasePattern = "\\s*\\w+ [a-z]+.*"; // "\\w* [a-z]+.*";
+		String lowercasePattern = "\\s*\\w+ \\*|([a-z]+).*";
 		String uppercasePattern = "(#|\\w)* ([A-Z]+|[A-Z][a-z]*).*";
 
 		analyzeModel.deleteLinesWhereVariableHasIncorrectName();
@@ -103,11 +103,7 @@ public class AnalyzeService {
 		for (String line : sourceCode) {
 			for (String element : lowercaseTypes) {
 				if (line.contains(element)) {
-					System.out.println("Van egy lowercase-nek előírt változó.");
-					if (line.matches(lowercasePattern)) {
-						System.out.println("És itt egyezik a mintával.");
-					} else {
-						System.out.println("Itt pedig NEM egyezik a mintával. Sor: " + (sourceCode.indexOf(line) + 1));
+					if (!line.matches(lowercasePattern)) {
 						analyzeModel.addLinesWhereVariableHasIncorrectName(sourceCode.indexOf(line) + 1);
 					}
 				}
@@ -115,11 +111,7 @@ public class AnalyzeService {
 
 			for (String element : uppercaseTypes) {
 				if (line.contains(element)) {
-					System.out.println("Van egy uppercase-nek előírt változó.");
-					if (line.matches(uppercasePattern)) {
-						System.out.println("És itt egyezik a mintával.");
-					} else {
-						System.out.println("Itt pedig NEM egyezik a mintával. Sor: " + (sourceCode.indexOf(line) + 1));
+					if (!line.matches(uppercasePattern)) {
 						analyzeModel.addLinesWhereVariableHasIncorrectName(sourceCode.indexOf(line) + 1);
 					}
 				}
