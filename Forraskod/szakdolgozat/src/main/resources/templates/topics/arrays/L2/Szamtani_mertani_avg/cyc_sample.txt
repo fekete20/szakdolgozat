@@ -1,0 +1,6 @@
+2
+main
+2
+szamtaniAtlag
+2
+mertaniAtlag
