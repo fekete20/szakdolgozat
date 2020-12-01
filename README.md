@@ -11,7 +11,7 @@ A megfelelő működéshez a Java-n felül szükséges, hogy telepítve legyenek
 1. GNU-GCC fordító (telepítése: sudo apt install gcc)
 2. CUnit (telepítése: sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev)
 3. cppcheck (telepítése: sudo apt install cppcheck)
-4. frama-c (telepítése: sudo apt install cppcheck)
+4. frama-c (telepítése: sudo apt install frama-c)
 5. pmccabe (telepítése: sudo apt install pmccabe)
 
 Fejleszőti környezetbe a Forraskod/szakdolgozat jegyzék importálandó.
